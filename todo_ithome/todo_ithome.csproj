@@ -6,10 +6,19 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\todo_ithome.DAL\todo_ithome.DAL.csproj" />
+    <ProjectReference Include="..\todo_ithome.Domain\todo_ithome.Domain.csproj" />
+    <ProjectReference Include="..\todo_ithome.Service\todo_ithome.Service.csproj" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="https://cdn.jsdelivr.net/gh/roadrunner-server/roadrunner@latest/schemas/config/3.0.schema.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

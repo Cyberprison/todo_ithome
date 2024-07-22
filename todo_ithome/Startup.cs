@@ -4,8 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
+using todo_ithome.DAL;
 
 namespace todo_ithome
 {
@@ -21,6 +24,9 @@ namespace todo_ithome
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("MSSQL");
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
             services.AddMvc();
         }
 
@@ -43,7 +49,7 @@ namespace todo_ithome
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Task}/{action=Index}");
             });
         }
     }

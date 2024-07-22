@@ -1,0 +1,32 @@
+﻿@using todo_ithome.Domain.Enum;
+
+@{
+    ViewData["Title"] = "Create task";
+}
+
+<form id="createTaskForm">
+
+    <div>
+        <label>
+            Name task
+        </label>
+        <input type="text" name="name" />
+    </div>
+
+    <select name="priority" asp-items="Html.GetEnumSelectList<Priority>()">
+    </select>
+
+    <div>
+        <label>
+            Description task
+        </label>
+        <textarea type="text" name="description">
+        </textarea>
+    </div>
+
+    <button type="submit" id="createTask">
+        Create task
+    </button>
+
+</form>
+
