@@ -10,7 +10,7 @@ namespace todo_ithome.DAL
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         public DbSet<TaskEntity> Tasks { get; set; }

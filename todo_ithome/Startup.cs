@@ -27,6 +27,11 @@ namespace todo_ithome
             var connectionString = Configuration.GetConnectionString("MSSQL");
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
+            //регистрация сервисов и репозиториев
+            //метод расширения
+            services.RegisterRepositories();
+            services.RegisterServices();
+            
             services.AddMvc();
         }
 

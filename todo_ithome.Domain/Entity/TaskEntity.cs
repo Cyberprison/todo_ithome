@@ -14,6 +14,14 @@ namespace todo_ithome.Domain.Entity
 
         public string Description { get; set; }
 
+        //приоритет
         public Priority Priority { get; set; }
+
+        //время создания
+        public DateTime Created { get; set; }
+
+        //выполнена ли
+        public bool IsDone { get; set; }
+
     }
 }

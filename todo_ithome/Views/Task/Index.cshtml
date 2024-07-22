@@ -13,8 +13,7 @@
         <input type="text" name="name" />
     </div>
 
-    <select name="priority" asp-items="Html.GetEnumSelectList<Priority>()">
-    </select>
+    <select name="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select>
 
     <div>
         <label>
@@ -30,3 +29,45 @@
 
 </form>
 
+@section Scripts
+{
+    <script type="text/javascript">
+
+    //dont use library sweetalert2
+
+    //почему alert без preventDefault не работает.....
+        
+    $("#createTask").on("click", function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Create")',
+            data: $("#createTaskForm").serialize(),
+            success: function (response) {
+                alert(response.description);
+                /*
+                Swal.fire({
+                    title: "Inforamtion",
+                    text: response.responseJSON.description,
+                    icon: "success",
+                    confirmButtonText: "Ok"
+                })
+                */
+            },
+            error: function (response) {
+                alert(response.description);
+                /*
+                Swal.fire({
+                    title: "Inforamtion",
+                    text: response.responseJSON.description,
+                    icon: "error",
+                    confirmButtonText: "Ok"
+                })
+                */
+            }
+        });
+    });
+
+    </script>
+
+}

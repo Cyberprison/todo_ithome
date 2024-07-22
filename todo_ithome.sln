@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.34930.48
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todo_ithome", "todo_ithome\todo_ithome.csproj", "{9EE0FCB5-3DA0-4DA7-92D6-094AFCBB1539}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "todo_ithome", "todo_ithome\todo_ithome.csproj", "{9EE0FCB5-3DA0-4DA7-92D6-094AFCBB1539}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{4732284B-47D5-4C37-895C-C269D4EB5971}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todo_ithome.DAL", "todo_ithome.DAL\todo_ithome.DAL.csproj", "{ED4DA9C3-44E8-4A05-BCCE-4C594654F608}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "todo_ithome.DAL", "todo_ithome.DAL\todo_ithome.DAL.csproj", "{ED4DA9C3-44E8-4A05-BCCE-4C594654F608}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{5817EA71-F4E0-43FB-8564-278306699DE5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{2E002F1F-EC3E-4526-8BD9-0C828278FA17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todo_ithome.Domain", "todo_ithome.Domain\todo_ithome.Domain.csproj", "{501E732E-0D0A-4B33-8EA6-65E6047056CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "todo_ithome.Domain", "todo_ithome.Domain\todo_ithome.Domain.csproj", "{501E732E-0D0A-4B33-8EA6-65E6047056CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "todo_ithome.Service", "todo_ithome.Service\todo_ithome.Service.csproj", "{7B6095BF-FDC9-4FDB-A710-3BC92CF027BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "todo_ithome.Service", "todo_ithome.Service\todo_ithome.Service.csproj", "{7B6095BF-FDC9-4FDB-A710-3BC92CF027BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
