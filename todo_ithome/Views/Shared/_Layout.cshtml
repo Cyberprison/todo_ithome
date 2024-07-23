@@ -11,64 +11,62 @@
     <style>
     </style>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!--
-
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        
-        -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.min.css" />
 
 </head>
 
-    <body>
+<body>
 
-        <header>
-            <nav>
-                <div>
-                    <a asp-area="" asp-controller="Task" asp-action="Index">
-                        todo_ithome
-                    </a>
-                </div>
-            </nav>
-        </header>
-
-        <main>
+    <header>
+        <nav>
             <div>
-                <div>
-                    <h1>
-                        Completed tasks
-                    </h1>
-                    <ul id="completedListTask">
-                    </ul>
-                    <button type="submit" id="calculateTask">
-                        End day
-                    </button>
-                </div>
-
-                <div>
-                    <h1>
-                        Create task
-                    </h1>
-                    @RenderBody()
-                </div>
-
+                <a asp-area="" asp-controller="Task" asp-action="Index">
+                    todo_ithome
+                </a>
             </div>
-        </main>
+        </nav>
+    </header>
 
-        <footer>
+    <main>
+        <div>
             <div>
-                <p>
-                    &copy; 2024 - todo_ithome
-                </p>
+                <h1>
+                    Completed tasks
+                </h1>
+                <ul id="completedListTask"></ul>
+                <button type="submit" id="calculateTask">
+                    End day
+                </button>
             </div>
-        </footer>
 
-        @RenderSection("Scripts", required: false)
+            <div>
+                <h1>
+                    Create task
+                </h1>
+                @RenderBody()
+            </div>
 
-        <script>
+        </div>
+    </main>
 
-        </script>
-    </body>
+    <footer>
+        <div>
+            <p>
+                &copy; 2024 - todo_ithome
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/cesiumjs/1.78/Build/Cesium/Cesium.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/2.1.0/js/dataTables.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+    </script>
+
+
+</body>
 </html>

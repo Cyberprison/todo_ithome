@@ -12,6 +12,7 @@ using todo_ithome.DAL.Interfaces;
 using System.Linq;
 using todo_ithome.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
+using todo_ithome.Domain.Extensions;
 
 namespace todo_ithome.Service.Implementations
 {
@@ -32,12 +33,9 @@ namespace todo_ithome.Service.Implementations
             try
             {
                 _logger.LogInformation($"Request on create task - {model.Name}");
-
-                //чтобы тут LINQ работало для IQueryable, не забудь подключить
-                //using Microsoft.EntityFrameworkCore;
-                //using System.Linq;
+                
                 var task = await _taskRepository.GetAll()
-                    .Where(x => x.Created == DateTime.Today)
+                    .Where(x => x.Created.Date == DateTime.Today)
                     .FirstOrDefaultAsync(x => x.Name == model.Name);
 
                 if (task != null)
@@ -78,19 +76,46 @@ namespace todo_ithome.Service.Implementations
                 };
             }
 
-
-
-
-
+            
         }
 
+        //need async???
+        //warning
+        public async Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks()
+        {
+            try
+            {
+                var tasks = _taskRepository.GetAll()
+                    .Select(x => new TaskViewModel()
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        IsDone = x.IsDone == true ? "Ready" : "No ready",
+                        Description = x.Description,
+                        Priority = x.Priority.GetDisplayName(),
+                        Created = x.Created.ToLongDateString()
+                    });
 
+                _logger.LogInformation($"[TaskService.GetTask] gets count elements {tasks.Count()}");
 
+                return new BaseResponse<IEnumerable<TaskViewModel>>()
+                {
+                    Data = tasks,
+                    StatusCode = StatusCode.OK
+                };
 
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"[TaskService.GetTask]: {ex.Message}");
 
-
-
-
+                return new BaseResponse<IEnumerable<TaskViewModel>> ()
+                {
+                    Description = "Internal Error",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
     }
 
 

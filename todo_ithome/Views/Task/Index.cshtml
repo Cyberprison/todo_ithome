@@ -8,16 +8,21 @@
 
     <div>
         <label>
-            Name task
+            Name
         </label>
         <input type="text" name="name" />
     </div>
 
-    <select name="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+    <div>
+        <label>
+            Priority
+        </label>
+        <select name="priority" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+    </div>
 
     <div>
         <label>
-            Description task
+            Description
         </label>
         <textarea type="text" name="description">
         </textarea>
@@ -29,44 +34,110 @@
 
 </form>
 
+<div>
+    <table id="tableId">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Priority
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Ready
+                </th>
+                <th>
+                    Task
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        </tbody>
+
+        <tfoot>
+
+        </tfoot>
+
+    </table>
+</div>
+
 @section Scripts
 {
     <script type="text/javascript">
 
-    //dont use library sweetalert2
-
-    //почему alert без preventDefault не работает.....
-        
-    $("#createTask").on("click", function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("Create")',
-            data: $("#createTaskForm").serialize(),
-            success: function (response) {
-                alert(response.description);
-                /*
-                Swal.fire({
-                    title: "Inforamtion",
-                    text: response.responseJSON.description,
-                    icon: "success",
-                    confirmButtonText: "Ok"
-                })
-                */
+        let taskTable = $("#tableId").DataTable({
+            serverSide: true,
+            searching: false,
+            paging: false,
+            sorting: false,
+            columnDefs: [
+                {
+                    orderable: false,
+                    _targets: "_all"
+                }
+            ],
+            ajax: {
+                url: '@Url.Action("TaskHandler")',
+                method: "POST"
             },
-            error: function (response) {
-                alert(response.description);
-                /*
-                Swal.fire({
-                    title: "Inforamtion",
-                    text: response.responseJSON.description,
-                    icon: "error",
-                    confirmButtonText: "Ok"
-                })
-                */
+            columns: [
+                { data: "name" },
+                { data: "priority" },
+                { data: "description" },
+                { data: "isDone" },
+                {
+                    data: null,
+                    sortable: false,
+                    render: function (data, type) {
+                        return "<button>Execute</button>"
+                    }
+                }
+            ],
+            createRow: function (nRow, data) {
+                for (var i = 0; i < taskTable.columns().header().length - 1; i++) {
+                    $("td".nRow).eq(i).css("cursor", "pointer");
+                }
             }
         });
-    });
+    
+        
+        $("#createTask").on("click", function (e) {
+            //почему alert без preventDefault не работает.....
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Create")',
+                data: $("#createTaskForm").serialize(),
+                success: function (response) {
+                    //alert(response.description);
+                
+                    Swal.fire({
+                        title: "Inforamtion",
+                        text: response.description,
+                        icon: "success",
+                        confirmButtonText: "Ok"
+                    })
+                
+                },
+                error: function (response) {
+                    //alert(response.description);
+                
+                    Swal.fire({
+                        title: "Inforamtion",
+                        text: response.responseJSON.description,
+                        icon: "error",
+                        confirmButtonText: "Ok"
+                    })
+                
+                }
+            });
+        });
 
     </script>
 

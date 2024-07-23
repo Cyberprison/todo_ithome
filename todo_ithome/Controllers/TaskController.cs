@@ -27,6 +27,15 @@ namespace todo_ithome.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> TaskHandler()
+        {
+            var result = await _taskService.GetTasks();
+
+            return Json(new { data = result.Data });
+
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Create(CreateTaskViewModel model)
         {
             var response = await _taskService.Create(model);
