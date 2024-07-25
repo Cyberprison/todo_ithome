@@ -36,6 +36,25 @@ namespace todo_ithome.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> EndTask(long id)
+        {
+            var response = await _taskService.EndTask(id);
+
+            if (response.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return Ok(new
+                {
+                    description = response.Description
+                });
+            }
+
+            return BadRequest(new
+            {
+                description = response.Description
+            });
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Create(CreateTaskViewModel model)
         {
             var response = await _taskService.Create(model);
@@ -54,6 +73,14 @@ namespace todo_ithome.Controllers
             {
                 description = response.Description
             });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTask(long id)
+        {
+            var response = await _taskService.GetTask(id);
+
+            return PartialView(response.Data);
         }
     }
 }

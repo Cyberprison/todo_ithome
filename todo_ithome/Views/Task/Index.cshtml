@@ -70,6 +70,15 @@
 @section Scripts
 {
     <script type="text/javascript">
+        
+        const swalWithButtons = Swal.mixin({
+            /*
+            customClass: {
+                confirmButton: 'btn '
+            }
+            */
+            buttonStyling: false
+        })
 
         let taskTable = $("#tableId").DataTable({
             serverSide: true,
@@ -84,7 +93,8 @@
             ],
             ajax: {
                 url: '@Url.Action("TaskHandler")',
-                method: "POST"
+                method: "POST",
+                data: {}
             },
             columns: [
                 { data: "name" },
@@ -99,10 +109,62 @@
                     }
                 }
             ],
-            createRow: function (nRow, data) {
-                for (var i = 0; i < taskTable.columns().header().length - 1; i++) {
-                    $("td".nRow).eq(i).css("cursor", "pointer");
+            createdRow: function (nRow, data) {
+                var handlerEdit = function () {
+                    //open modal window
+                    openModal({
+                        url: '@Url.Action("GetTask")',
+                        data: data.id
+                    })
+                } 
+
+                var handlerComplete = function () {
+                    swalWithButtons.fire({
+                        title: "You are ready?",
+                        icon: "warning",
+                        confirmButtonText: "Yes",
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                type: 'POST',
+                                url: '@Url.Action("EndTask")',
+                                data: { id: data.id },
+                                success: function (response) {
+                                    Swal.fire({
+                                        title: "Inforamtion",
+                                        text: response.description,
+                                        icon: "success",
+                                        confirmButtonText: "Ok"
+                                    })
+                                    taskTable.draw();
+
+                                },
+                                error: function (response) {
+                                    Swal.fire({
+                                        title: "Inforamtion",
+                                        text: response.responseJSON.description, //почему тут в JSON, а выше нет
+                                        icon: "error",
+                                        confirmButtonText: "Ok"
+                                    })
+
+                                }
+                            })
+                        }
+                    })
                 }
+
+                for (var i = 0; i < taskTable.columns().header().length - 1; i++) {
+                    if (data.isDone === "Ready") {
+                        $("td", nRow).eq(i).css("cursor", "pointer");
+                    }
+                    else {
+                        $("td", nRow).eq(i).css("cursor", "pointer");
+                    }
+
+                    $("td", nRow).eq(i).on("click", handlerEdit);
+                }
+                $("td button", nRow).on("click", handlerComplete);
             }
         });
     
@@ -110,6 +172,7 @@
         $("#createTask").on("click", function (e) {
             //почему alert без preventDefault не работает.....
             e.preventDefault();
+
             $.ajax({
                 type: "POST",
                 url: '@Url.Action("Create")',
@@ -136,7 +199,11 @@
                     })
                 
                 }
+
+
             });
+
+
         });
 
     </script>

@@ -116,6 +116,91 @@ namespace todo_ithome.Service.Implementations
                 };
             }
         }
+
+        public async Task<IBaseResponse<TaskViewModel>> GetTask(long id)
+        {
+            try
+            {
+                //получение задачи
+                var task = await _taskRepository.GetAll()
+                       .FirstOrDefaultAsync(x => x.Id == id);
+
+                if (task == null)
+                {
+                    return new BaseResponse<TaskViewModel>()
+                    {
+                        Description = "Task not found",
+                        StatusCode = StatusCode.TaskNotFound
+                    };
+                }
+
+                var data = new TaskViewModel()
+                {
+                    Id = task.Id,
+                    Name = task.Name,
+                    IsDone = task.IsDone == true ? "Ready" : "No ready",
+                    Description = task.Description,
+                    Priority = task.Priority.GetDisplayName(),
+                    Created = task.Created.ToLongDateString()
+                };
+
+                return new BaseResponse<TaskViewModel>()
+                {
+                    Data = data,
+                    StatusCode = StatusCode.OK
+                };
+
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"[TaskService.GetTask]: {ex.Message}");
+
+                return new BaseResponse<TaskViewModel>()
+                {
+                    Description = "Internal Error",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+
+        public async Task<IBaseResponse<bool>> EndTask(long id)
+        {
+            try
+            {
+                var task = await _taskRepository.GetAll()
+                       .FirstOrDefaultAsync(x => x.Id == id);
+
+                if (task == null)
+                {
+                    return new BaseResponse<bool>()
+                    {
+                        Description = "Task not found",
+                        StatusCode = StatusCode.TaskNotFound
+                    };
+                }
+
+                task.IsDone = true;
+
+                await _taskRepository.Update(task);
+
+                return new BaseResponse<bool>()
+                {
+                    StatusCode = StatusCode.OK,
+                    Description = "Task is finally"
+                };
+
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, $"[TaskService.EndTask]: {ex.Message}");
+
+                return new BaseResponse<bool>()
+                {
+                    Description = "Internal Error",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
     }
 
 

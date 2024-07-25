@@ -1,0 +1,38 @@
+﻿@using todo_ithome.Domain.Enum
+@model todo_ithome.Domain.ViewModels.TaskViewModel
+
+<form id="taskForm">
+    <input asp-for="Id" hidden />
+
+    <div>
+        <div>
+            <label asp-for="@Model.Name"></label>
+            <input type="text" asp-for="@Model.Name" />
+        </div>
+        <div>
+            <label asp-for="@Model.Priority"></label>
+            <select asp-for="@Model.Priority" id="prioritySearch" asp-items="Html.GetEnumSelectList<Priority>()"></select>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label asp-for="@Model.IsDone"></label>
+            <input type="text" asp-for="@Model.IsDone" />
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label asp-for="@Model.Created"></label>
+            <input type="text" asp-for="@Model.Created" />
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label asp-for="@Model.Description"></label>
+            <textarea type="text" asp-for="@Model.Description"></textarea>
+        </div>
+    </div>
+</form>

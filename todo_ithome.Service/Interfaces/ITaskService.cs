@@ -14,5 +14,9 @@ namespace todo_ithome.Service.Interfaces
         Task<IBaseResponse<TaskEntity>> Create(CreateTaskViewModel model);
 
         Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks();
+
+        Task<IBaseResponse<TaskViewModel>> GetTask(long id);
+
+        Task<IBaseResponse<bool>> EndTask(long id);
     }
 }
