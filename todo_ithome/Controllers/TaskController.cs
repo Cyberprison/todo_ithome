@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using todo_ithome.Domain.ViewModels;
 using todo_ithome.Models;
 using todo_ithome.Service.Interfaces;
+using todo_ithome.Domain.Filters.Task;
 
 namespace todo_ithome.Controllers
 {
@@ -27,9 +28,9 @@ namespace todo_ithome.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> TaskHandler()
+        public async Task<IActionResult> TaskHandler(TaskFilter filter)
         {
-            var result = await _taskService.GetTasks();
+            var result = await _taskService.GetTasks(filter);
 
             return Json(new { data = result.Data });
 

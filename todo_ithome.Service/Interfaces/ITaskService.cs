@@ -4,6 +4,7 @@ using System.Text;
 
 using System.Threading.Tasks;
 using todo_ithome.Domain.Entity;
+using todo_ithome.Domain.Filters.Task;
 using todo_ithome.Domain.Response;
 using todo_ithome.Domain.ViewModels;
 
@@ -13,7 +14,7 @@ namespace todo_ithome.Service.Interfaces
     {
         Task<IBaseResponse<TaskEntity>> Create(CreateTaskViewModel model);
 
-        Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks();
+        Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks(TaskFilter filter);
 
         Task<IBaseResponse<TaskViewModel>> GetTask(long id);
 

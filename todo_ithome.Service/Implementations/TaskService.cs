@@ -13,6 +13,7 @@ using System.Linq;
 using todo_ithome.Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using todo_ithome.Domain.Extensions;
+using todo_ithome.Domain.Filters.Task;
 
 namespace todo_ithome.Service.Implementations
 {
@@ -81,11 +82,13 @@ namespace todo_ithome.Service.Implementations
 
         //need async???
         //warning
-        public async Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks()
+        public async Task<IBaseResponse<IEnumerable<TaskViewModel>>> GetTasks(TaskFilter filter)
         {
             try
             {
                 var tasks = _taskRepository.GetAll()
+                    .WhereIf(!string.IsNullOrWhiteSpace(filter.Name), x => x.Name == filter.Name)
+                    .WhereIf(filter.Priority.HasValue, x => x.Priority == filter.Priority)
                     .Select(x => new TaskViewModel()
                     {
                         Id = x.Id,

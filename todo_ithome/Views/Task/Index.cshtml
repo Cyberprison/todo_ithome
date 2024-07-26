@@ -35,6 +35,26 @@
 </form>
 
 <div>
+    <h3>
+        Filters:
+    </h3>
+    <div>
+        <label>
+            Name
+        </label>
+        <input type="text" name="nameTask" />
+    </div>
+
+    <div>
+        <label>
+            Priority
+        </label>
+        <select id="prioritySearch" asp-items="Html.GetEnumSelectList<Priority>()">
+        </select>
+    </div>
+</div>
+
+<div>
     <table id="tableId">
         <thead>
             <tr>
@@ -78,7 +98,15 @@
             }
             */
             buttonStyling: false
-        })
+        });
+
+
+        function model() {
+            return {
+                Name: $('input[name="nameTask"]').val(),
+                priority: $('#prioritySearch option:selected').val()
+            }
+        };
 
         let taskTable = $("#tableId").DataTable({
             serverSide: true,
@@ -94,7 +122,7 @@
             ajax: {
                 url: '@Url.Action("TaskHandler")',
                 method: "POST",
-                data: {}
+                data: model
             },
             columns: [
                 { data: "name" },
@@ -199,11 +227,15 @@
                     })
                 
                 }
-
-
             });
+        });
 
+        $('input[name="nameTask"]').on('change', function () {
+            taskTable.draw();
+        });
 
+        $('#prioritySearch').on('change', function () {
+            taskTable.draw();
         });
 
     </script>
